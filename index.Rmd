@@ -1,0 +1,26 @@
+---
+title: "dplyr"
+output: html_document
+---
+
+#this is a first level header
+##this is a second level header-smaller
+### this is is third level header
+
+to make a paragraph just type normally
+
+* list item 1
+* list item 2
+* list item 3
+* list item 4
+* change
+* change2
+
+column 1 | column 2
+---|---
+Phillies | National
+Yankees | American
+Cubs | National
+red Sox | American
+
+<img src="260px-A_sunflower.jpg" width="300" /> 
