@@ -8,9 +8,9 @@ output: html_document
 
 Heidi Beezub Mercyhurst University Graduate Student
 
-##filtering columns & rows
+##Sample Website for Filtering Columns & Rows
 
-Using Dplyr, can filter colums & rows by using select for specific columns & filter for specific rows.  Example using Lahman baseball databases.  first load Laman & Dplyr packages
+Using Dplyr, we can filter colums & rows by using "select" for specific columns & "filter" for specific rows.  Example using Lahman baseball databases.  First load Laman & Dplyr packages
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -24,5 +24,14 @@ Now suppose we would like to see the homerun total for the 1927 New York Yankees
 Batting %>%
   select (playerID,yearID,teamID,HR)%>%
   filter (teamID=='NYA' & yearID==1927)
+```
+
+
+If we want to add more nuance (like my showoff friend Ron) we can qualify for over 50 home runs:
+
+```{r}
+Batting %>%
+  select (playerID,yearID,teamID,HR)%>%
+  filter (teamID=='NYA' & yearID==1927 & HR > 50)
 ```
 
