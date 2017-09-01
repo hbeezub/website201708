@@ -1,7 +1,12 @@
 ---
 title: "dplyr"
+
 output: html_document
 ---
+
+<img src="heidipic.png" width="300"/>
+
+Heidi Beezub Mercyhurst University Graduate Student
 
 ##filtering columns & rows
 
@@ -15,7 +20,7 @@ library(dplyr)
 
 Now suppose we would like to see the homerun total for the 1927 New York Yankees.  We could run the following code:
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 Batting %>%
   select (playerID,yearID,teamID,HR)%>%
   filter (teamID=='NYA' & yearID==1927)
