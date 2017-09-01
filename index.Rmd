@@ -3,24 +3,21 @@ title: "dplyr"
 output: html_document
 ---
 
-#this is a first level header
-##this is a second level header-smaller
-### this is is third level header
+##filtering columns & rows
 
-to make a paragraph just type normally
+Using Dplyr, can filter colums & rows by using select for specific columns & filter for specific rows.  Example using Lahman baseball databases.  first load Laman & Dplyr packages
 
-* list item 1
-* list item 2
-* list item 3
-* list item 4
-* change
-* change2
 
-column 1 | column 2
----|---
-Phillies | National
-Yankees | American
-Cubs | National
-red Sox | American
+```{r message=FALSE, warning=FALSE}
+library(Lahman)
+library(dplyr)
+```
 
-<img src="260px-A_sunflower.jpg" width="300" /> 
+Now suppose we would like to see the homerun total for the 1927 New York Yankees.  We could run the following code:
+
+```{r}
+Batting %>%
+  select (playerID,yearID,teamID,HR)%>%
+  filter (teamID=='NYA' & yearID==1927)
+```
+
