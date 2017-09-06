@@ -35,3 +35,55 @@ Batting %>%
   filter (teamID=='NYA' & yearID==1927 & HR > 50)
 ```
 
+
+New Assignment for Friday 9/8/2017
+Add 5 examples from class
+
+1. All the New York Yankees with more than 40 Home Runs:
+
+```{r}
+Batting %>%
+    select(playerID,yearID,teamID,HR)%>%
+    filter(HR>=40 & teamID=='NYA')
+```
+
+
+2. ALL players with more than 40 Home Runs but less than 60 Strike outs:
+
+```{r}
+Batting %>%
+  select(playerID,yearID,teamID,HR,SO)%>%
+  filter(HR>=40 & SO<=60)
+```
+
+3. Let's look at the Philadelphia Phillies from the 1970's.  We want the best players with more than 30 Home runs.
+
+```{r}
+Batting %>%
+  select(playerID,yearID,teamID,HR,SO)%>%
+  filter(HR>=30 & teamID=='PHI' & yearID>=1970 & yearID<=1979)
+
+```
+
+
+4. Let's look at all teams & players again. We want to see anyone with more than 50 home runs, but we want the list sorted with the most home runs at the top:
+
+```{r}
+Batting %>%
+  select(playerID,yearID,teamID,HR,SO)%>%
+  filter(HR>50)%>%
+  arrange(desc(HR))
+```
+
+5 (last one for today)
+Now lets look a the best batters, we want players that struck out less than 10 times, but that have been up to bat 400 or more times.  We'll arrange these by the number of strikeouts with the least number at the top:
+
+```{r}
+Batting %>%
+  select(playerID,yearID,teamID,AB,SO)%>%
+  filter(SO<10 & AB>=400)%>%
+  arrange(SO)
+```
+
+
+Ok that is all for today (9/6/17)
