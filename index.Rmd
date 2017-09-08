@@ -7,18 +7,31 @@ output: html_document
 <img src="heidipic.png" width="300"/>
 
 Heidi Beezub Mercyhurst University Graduate Student
+9/8/2017
 
-##Sample Website for Filtering Columns & Rows
+##Sample Website for showing the use of:
+###Filtering
+###Ordering
+###Aggregation
 
-Using Dplyr, we can filter colums & rows by using "select" for specific columns & "filter" for specific rows.  Example using Lahman baseball databases.  First load Laman & Dplyr packages
+Examples use Lahman baseball database.  First load Lahman & dplyr packages
+Go to "tools"" on R studio.  Select "install Packages" then type in "Lahman" & hit the "install" button (it may take a while).
+Once Lahman package is installed, then install the "dplyr" package.
 
+Once the packages are installed, you need to "load" them into R-studio.  type "library(Lahman)" and once that is finished type in library(dplyr).  Note the commands & file names are case sensitive.  If you have issues, check your spelling & case.
+
+in order to insert the code into the website, we use the "insert" on the session tool bar.
 
 ```{r message=FALSE, warning=FALSE}
 library(Lahman)
 library(dplyr)
 ```
 
-Now suppose we would like to see the homerun total for the 1927 New York Yankees.  We could run the following code:
+#Filtering Columns & Rows:
+Using Dplyr, we can filter colums & rows by using "select" for specific columns & "filter" for specific rows. 
+
+###Exmple 1: 
+Now suppose we would like to see the homerun totals for the 1927 New York Yankees.  We could run the following code:
 
 ```{r message=FALSE, warning=FALSE}
 Batting %>%
@@ -26,8 +39,7 @@ Batting %>%
   filter (teamID=='NYA' & yearID==1927)
 ```
 
-
-If we want to add more nuance (like my showoff friend Ron) we can qualify for over 50 home runs:
+If we want to add more nuance (like my showoff friend Ron) we can qualify for over 50 home runs with this code:
 
 ```{r}
 Batting %>%
@@ -35,11 +47,11 @@ Batting %>%
   filter (teamID=='NYA' & yearID==1927 & HR > 50)
 ```
 
+#Ordering:
+Using Dplyr, we can order results in ascending (default) or descending order.
 
-New Assignment for Friday 9/8/2017
-Add 5 examples from class
-
-1. All the New York Yankees with more than 40 Home Runs:
+###Exmple 2: 
+To find all the New York Yankees with more than 40 Home Runs we would run the following code.  Notice these are in order by year smallest to largest. Ascending order is the default.
 
 ```{r}
 Batting %>%
@@ -47,8 +59,8 @@ Batting %>%
     filter(HR>=40 & teamID=='NYA')
 ```
 
-
-2. ALL players with more than 40 Home Runs but less than 60 Strike outs:
+###Exmple 3: 
+ALL players with more than 40 Home Runs but less than 60 Strike outs would need the following code:
 
 ```{r}
 Batting %>%
@@ -56,7 +68,8 @@ Batting %>%
   filter(HR>=40 & SO<=60)
 ```
 
-3. Let's look at the Philadelphia Phillies from the 1970's.  We want the best players with more than 30 Home runs.
+###Exmple 4:
+Now let's look at the Philadelphia Phillies from the 1970's.  We want the best players with more than 30 Home runs. This code adds filters for the year:
 
 ```{r}
 Batting %>%
@@ -65,8 +78,9 @@ Batting %>%
 
 ```
 
+###Exmple 5:
 
-4. Let's look at all teams & players again. We want to see anyone with more than 50 home runs, but we want the list sorted with the most home runs at the top:
+Back to all teams & players again. We want to see anyone with more than 50 home runs, but we want the list sorted with the most home runs at the top.  Since ascending is the default, we need to add in code to arrange it in descending order:
 
 ```{r}
 Batting %>%
@@ -75,8 +89,8 @@ Batting %>%
   arrange(desc(HR))
 ```
 
-5 (last one for today)
-Now lets look a the best batters, we want players that struck out less than 10 times, but that have been up to bat 400 or more times.  We'll arrange these by the number of strikeouts with the least number at the top:
+###Exmple 6:
+Now lets look a the best batters, we want players that struck out less than 10 times, but that have been up to bat 400 or more times.  We'll arrange these by the number of strikeouts with the least number at the top (the default):
 
 ```{r}
 Batting %>%
@@ -85,5 +99,61 @@ Batting %>%
   arrange(SO)
 ```
 
+#Aggregation:
+Dplyr can also do sums, averages, max or minimum to combine total from rows.
 
-Ok that is all for today (9/6/17)
+###Exmple 7:
+The following code totals all of Babe Ruth's home runs.
+
+```{r}
+Batting%>%
+  filter(playerID=='ruthba01')%>%
+  group_by(playerID)%>%
+  summarize(career_HR=sum(HR))
+```
+
+
+###Exmple 8:
+Find the Career HR totals for all players, but limit the list to those who have a career total of 600 or more homeruns.  Put the highest totals at the top.
+
+```{r}
+Batting%>%
+  group_by(playerID)%>%
+  summarize(career_HR=sum(HR))%>%
+  filter(career_HR>=600)%>%
+  arrange(desc(career_HR))
+```
+
+###Exmple 9:
+What players have the highest average (mean), per season Home run totals filer by at lease an average of 30.
+```{r}
+Batting%>%
+  group_by(playerID)%>%
+  summarize(ave_HR=mean(HR))%>%
+  filter(ave_HR>30)%>%
+  arrange(desc(ave_HR))
+```
+
+###Exmple 10:
+Now we can add some more nuance: What players, since 1970 have hit more than 50 HR at least once (don't list a player more than once). Since we only want a name listed once we're looking for a maximum:
+
+```{r}
+Batting%>%
+  filter(yearID>=1970)%>%
+  group_by(playerID)%>%
+  summarize(max_HR=max(HR))%>%
+  filter(max_HR>50)
+```
+
+If only want names without the number of home runs we would add select(playerID):
+
+```{r}
+Batting%>%
+  filter(yearID>=1970)%>%
+  group_by(playerID)%>%
+  summarize(max_HR=max(HR))%>%
+  filter(max_HR>50)%>%
+  select(playerID)
+```
+
+That concludes our examples & usinf dplyr!
